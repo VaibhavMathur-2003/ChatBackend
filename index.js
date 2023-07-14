@@ -1,8 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const {MongoClient} = require('mongodb');
-
 const authRoutes = require("./routes/auth");
 const messageRoutes = require("./routes/messages");
 const app = express();
@@ -10,19 +8,18 @@ const socket = require("socket.io");
 require("dotenv").config();
 
 
-
 const corsOptions ={
  origin:'*', 
  credentials:true,            
  optionSuccessStatus:200,
 }
-app.use(cors(corsOptions))
+
 
 async function main(){
+  const Mongo_URL="mongodb+srv://mathurvaibhav010:wLtQ1WuC7t1oDLNf@cluster0.e0m91oa.mongodb.net/Chat?retryWrites=true&w=majority"
 
-  MONGO_URL="mongodb+srv://mathurvaibhav010:wLtQ1WuC7t1oDLNf@cluster0.e0m91oa.mongodb.net/Chat?retryWrites=true&w=majority"
 
-  const client = new MongoClient(MONGO_URL);
+  const client = new MongoClient(Mongo_URL);
 
   try {
       // Connect to the MongoDB cluster
@@ -38,11 +35,9 @@ async function main(){
   }
 }
 
-main().catch(console.error);
-
-
+main().catch(console.error)
 // mongoose
-//   .connect(process.env.MONGO_URL, {
+//   .connect(Mongo_URL, {
 //     useNewUrlParser: true,
 //     useUnifiedTopology: true,
 //   })
@@ -53,6 +48,7 @@ main().catch(console.error);
 //     console.log(err.message);
 //   });
   
+app.use(cors(corsOptions))
 app.use(express.json());
   
 app.use("/api/auth", authRoutes);
