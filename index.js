@@ -13,22 +13,42 @@ const corsOptions ={
  credentials:true,            
  optionSuccessStatus:200,
 }
-
-
-
-mongoose
-  .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("DB Connetion Successfull");
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
-  
 app.use(cors(corsOptions))
+
+
+async function main(){
+
+  const client = new MongoClient(process.env.MONGO_URL);
+
+  try {
+      // Connect to the MongoDB cluster
+      await client.connect();
+
+      // Make the appropriate DB calls
+      await  listDatabases(client);
+
+  } catch (e) {
+      console.error(e);
+  } finally {
+      await client.close();
+  }
+}
+
+main().catch(console.error);
+
+
+// mongoose
+//   .connect(process.env.MONGO_URL, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => {
+//     console.log("DB Connetion Successfull");
+//   })
+//   .catch((err) => {
+//     console.log(err.message);
+//   });
+  
 app.use(express.json());
   
 app.use("/api/auth", authRoutes);
