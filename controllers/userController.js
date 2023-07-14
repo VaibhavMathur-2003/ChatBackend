@@ -3,12 +3,14 @@ const bcrypt = require("bcrypt");
 const userDb = 'Chat'
 const { MongoClient, ObjectId } = require('mongodb');
 
+const Mongo_URL="mongodb+srv://mathurvaibhav010:wLtQ1WuC7t1oDLNf@cluster0.e0m91oa.mongodb.net/Chat?retryWrites=true&w=majority"
+
 const userCollectionDb = 'users'
 
 module.exs.login = async (req, res, next) => {
   try {
     const { username, password } = req.body;
-    const client = await MongoClient.connect(process.env.MONGO_URL);
+    const client = await MongoClient.connect(Mongo_URL);
     const usercollection = client.db(userDb).collection(userCollectionDb);
 
     const user = await usercollection.findOne({ username });
@@ -35,7 +37,7 @@ module.exs.register = async (req, res, next) => {
       return res.json({ msg: "Email already used", status: false });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const client = await MongoClient.connect(process.env.MONGO_URL);
+    const client = await MongoClient.connect(Mongo_URL);
 
     const usercollection = client.db(userDb).collection(userCollectionDb);
     const user = await User.create({

@@ -3,6 +3,7 @@ const messageDb = 'Chat'
 const { MongoClient, ObjectId } = require('mongodb');
 
 const messageCollectionDb = 'messages'
+const Mongo_URL="mongodb+srv://mathurvaibhav010:wLtQ1WuC7t1oDLNf@cluster0.e0m91oa.mongodb.net/Chat?retryWrites=true&w=majority"
 
 
 module.exports.getMessages = async (req, res, next) => {
@@ -30,7 +31,7 @@ module.exports.getMessages = async (req, res, next) => {
 module.exports.addMessage = async (req, res, next) => {
   try {
     const { from, to, message } = req.body;
-    const client = await MongoClient.connect(process.env.MONGO_URL);
+    const client = await MongoClient.connect(Mongo_URL);
     const msgcollection = client.db(messageDb).collection(messageCollectionDb);
 
     const data = await Messages.create({
