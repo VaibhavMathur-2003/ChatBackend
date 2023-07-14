@@ -26,7 +26,6 @@ async function main(){
       await client.connect();
 
       // Make the appropriate DB calls
-      await  listDatabases(client);
 
   } catch (e) {
       console.error(e);

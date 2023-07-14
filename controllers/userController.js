@@ -7,7 +7,7 @@ const Mongo_URL="mongodb+srv://mathurvaibhav010:wLtQ1WuC7t1oDLNf@cluster0.e0m91o
 
 const userCollectionDb = 'users'
 
-module.exs.login = async (req, res, next) => {
+module.exports.login = async (req, res, next) => {
   try {
     const { username, password } = req.body;
     const client = await MongoClient.connect(Mongo_URL);
@@ -26,7 +26,7 @@ module.exs.login = async (req, res, next) => {
   }
 };
 
-module.exs.register = async (req, res, next) => {
+module.exports.register = async (req, res, next) => {
   try {
     const { username, email, password } = req.body;
     const usernameCheck = await User.findOne({ username });
@@ -53,7 +53,7 @@ module.exs.register = async (req, res, next) => {
   }
 };
 
-module.exs.getAllUsers = async (req, res, next) => {
+module.exports.getAllUsers = async (req, res, next) => {
   try {
     
     const users = await User.find({ _id: { $ne: req.params.id } }).select([
@@ -69,7 +69,7 @@ module.exs.getAllUsers = async (req, res, next) => {
 
 
 
-module.exs.logOut = (req, res, next) => {
+module.exports.logOut = (req, res, next) => {
   try {
     if (!req.params.id) return res.json({ msg: "User id is required " });
     onlineUsers.delete(req.params.id);
