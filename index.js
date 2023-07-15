@@ -2,11 +2,12 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/auth");
-const { MongoClient, ObjectId } = require('mongodb');
+
+const app = express();
+
 
 const messageRoutes = require("./routes/messages");
-const app = express();
-const socket = require("socket.io");
+const socket = require("socket.io")
 require("dotenv").config();
 
 
@@ -17,37 +18,37 @@ const corsOptions ={
 }
 
 
-async function main(){
+// async function main(){
   const Mongo_URL="mongodb+srv://mathurvaibhav010:wLtQ1WuC7t1oDLNf@cluster0.e0m91oa.mongodb.net/Chat?retryWrites=true&w=majority"
 
 
-  const client = new MongoClient(Mongo_URL);
+//   const client = new MongoClient(Mongo_URL);
 
-  try {
-      // Connect to the MongoDB cluster
-      await client.connect();
+//   try {
+//       // Connect to the MongoDB cluster
+//       await client.connect();
 
-      // Make the appropriate DB calls
+//       // Make the appropriate DB calls
 
-  } catch (e) {
-      console.error(e);
-  } finally {
-      await client.close();
-  }
-}
+//   } catch (e) {
+//       console.error(e);
+//   } finally {
+//       await client.close();
+//   }
+// }
 
-main().catch(console.error)
-// mongoose
-//   .connect(Mongo_URL, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   })
-//   .then(() => {
-//     console.log("DB Connetion Successfull");
-//   })
-//   .catch((err) => {
-//     console.log(err.message);
-//   });
+// main().catch(console.error)
+mongoose
+  .connect(Mongo_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("DB Connetion Successfull");
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
   
 app.use(cors(corsOptions))
 app.use(express.json());

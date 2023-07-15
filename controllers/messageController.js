@@ -1,5 +1,5 @@
 const Messages = require("../models/messageModel");
-const messageDb = 'Chat'
+const messageDb = 'messages'
 const { MongoClient, ObjectId } = require('mongodb');
 
 const messageCollectionDb = 'messages'
